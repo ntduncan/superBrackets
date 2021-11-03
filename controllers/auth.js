@@ -5,7 +5,25 @@
  *    resetting passwords
  *******************************************/
 
-const User = require("../models/User");
+//  const crypto = require('crypto');
+
+//  const bcrypt = require('bcryptjs');
+//  const nodemailer = require('nodemailer');
+//  const sendgridTransport = require('nodemailer-sendgrid-transport');
+//  const { validationResult } = require('express-validator/check');
+ 
+ const User = require('../models/user');
+ 
+// for sending an email with sendgrid 
+// if using sendgrid, the api key and other information cannot be made public
+//  const transporter = nodemailer.createTransport(
+//    sendgridTransport({
+//      auth: {
+//        api_key:
+//         '' //<-put api key here
+//      }
+//    })
+//  );
 
 exports.getLogin = (req, res, next) => {};
 
