@@ -7,8 +7,20 @@
 
 const User = require("../models/User");
 
-// log users in
+exports.getLogin = (req, res, next) => {};
 
-// register user
+exports.getSignup = (req, res, next) => {};
 
-// reset passwords
+exports.postLogin = (req, res, next) => {};
+
+exports.postSignup = (req, res, next) => {};
+
+exports.postLogout = (req, res, next) => {};
+
+exports.getReset = (req, res, next) => {};
+
+exports.postReset = (req, res, next) => {};
+
+exports.getNewPassword = (req, res, next) => {};
+
+exports.postNewPassword = (req, res, next) => {};
