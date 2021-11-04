@@ -12,7 +12,7 @@
 //  const sendgridTransport = require('nodemailer-sendgrid-transport');
 //  const { validationResult } = require('express-validator/check');
  
- const User = require('../models/user');
+ const User = require('../models/User');
  
 // for sending an email with sendgrid 
 // if using sendgrid, the api key and other information cannot be made public
