@@ -8,6 +8,7 @@ const csrf = require("csurf");
 const homeRoutes = require("./routes/home");
 const bracketsRoutes = require("./routes/brackets");
 const authRoutes = require("./routes/auth");
+const dummyRoutes = require("./routes/dummyJSON");
 
 // Database Setup
 //Connect to MongoDB
@@ -34,7 +35,7 @@ app.use(express.static(__dirname + "/public")) //static files
 app.use(homeRoutes);
 app.use(bracketsRoutes);
 app.use(authRoutes);
-
+app.use(dummyRoutes);
 // Connections
 mongoose
   .connect(mongoCon, { useNewUrlParser: true, useUnifiedTopology: true })
