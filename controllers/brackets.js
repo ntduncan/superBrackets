@@ -7,7 +7,7 @@
  *    deleting a bracket
  *******************************************/
 
-const Bracket = require("../models/bracket");
+const Bracket = require("../models/Bracket");
 const User = require("../models/User");
 
 /***
