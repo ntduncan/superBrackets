@@ -4,7 +4,7 @@
  *    post to search all brackets
  *******************************************/
 
-const Bracket = require("../models/bracket");
+const Bracket = require("../models/Bracket");
 const User = require("../models/User");
 
 // get all brackets
