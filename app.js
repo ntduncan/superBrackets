@@ -6,7 +6,7 @@ const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
 const csrf = require("csurf");
 const homeRoutes = require("./routes/home");
-const bracketsRoutes = require("./routes/brackets");
+const bracketsRoutes = require("./routes/Brackets");
 const authRoutes = require("./routes/auth");
 const dummyRoutes = require("./routes/dummyJSON");
 
