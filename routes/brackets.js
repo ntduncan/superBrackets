@@ -9,7 +9,7 @@
 // const path = require("path");
 const express = require("express");
 const router = express.Router();
-const bracketsController = require("../controllers/Brackets");
+const bracketsController = require("../controllers/brackets");
 
 // getting a users brackets
 router.get("/bracket", bracketsController.getUserBrackets);
