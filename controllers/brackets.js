@@ -3,7 +3,7 @@
  *    getting a users brackets
  *    viewing a specific bracket
  *    editing a bracket
- *    adding a bracket
+ *    adding a bracket 
  *    deleting a bracket
  *******************************************/
 
@@ -44,7 +44,9 @@ exports.editBracket = (req, res, next) => {};
  *    to make new brackets, then the new bracket
  *    will be saved.
  ***/
-exports.getAddBracket = (req, res, next) => {};
+exports.getAddBracket = (req, res, next) => {
+   
+};
 
 exports.postAddBracket = (req, res, next) => {};
 

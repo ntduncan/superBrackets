@@ -3,11 +3,30 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const productSchema = new Schema({
-   userId: {
+   title: {
+      type: String,
+      required: true
+   },
+   creatorId: {
       type: Schema.Types.ObjectId,
-      ref: "Bracket",
+      ref: "User",
       required: true,
    },
+   description: {
+      type: String,
+      required: true
+   },
+   participants: [
+         {
+           name: {
+             type: String,
+             required: true
+           },
+           round: { 
+              type: Number, 
+              required: true }
+         }
+   ]
 });
 
 module.exports = mongoose.model("Product", productSchema);
