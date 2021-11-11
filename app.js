@@ -11,7 +11,7 @@ const authRoutes = require("./routes/auth");
 const dummyRoutes = require("./routes/dummyJSON");
 
 // Database Setup
-//Connect to MongoDB
+// Connect to MongoDB
 const username = process.env.BRACKETS_USERNAME;
 const password = process.env.BRACKETS_PASSWORD;
 const MONGODB_URI = `mongodb+srv://${username}:${password}@cluster0.vctnn.mongodb.net/cluster0`;

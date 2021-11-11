@@ -5,7 +5,11 @@ const Schema = mongoose.Schema;
 const bracketSchema = new Schema({
    title: {
       type: String,
-      required: true
+      required: true,
+   },
+   id: {
+      type: Number,
+      required: true,
    },
    creatorId: {
       type: Schema.Types.ObjectId,
@@ -14,19 +18,20 @@ const bracketSchema = new Schema({
    },
    description: {
       type: String,
-      required: true
+      required: true,
    },
    participants: [
-         {
-           name: {
-             type: String,
-             required: true
-           },
-           round: { 
-              type: Number, 
-              required: true }
-         }
-   ]
+      {
+         name: {
+            type: String,
+            required: true,
+         },
+         round: {
+            type: Number,
+            required: true,
+         },
+      },
+   ],
 });
 
 module.exports = mongoose.model("Bracket", bracketSchema);
