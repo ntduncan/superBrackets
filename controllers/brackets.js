@@ -38,23 +38,21 @@ exports.getOneBracket = (req, res, next) => {
 
 exports.editBracket = (req, res, next) => {
    // if(req.session.isLoggedIn){
-      const id = req.params.id;
-      const data = req.body;
-      const bracket = new Bracket({
-         title: title,
-         creatorId: req.user,
-         description: description,
-         participants: [] //may want to change this later
-      });
-      
-      Bracket.findByIdAndUpdate(id, bracket)
-      .then(() => res.redirect()) //This will just need to return the data we get
-      .catch(err => {console.log(err)})
-      // } else {
-      //     res.redirect('/products');
-      // }
+   // const id = req.params.id;
+   // const data = req.body;
+   // const bracket = new Bracket({
+   //    title: title,
+   //    creatorId: req.user,
+   //    description: description,
+   //    participants: [] //may want to change this later
+   // });
+   // Bracket.findByIdAndUpdate(id, bracket)
+   // .then(() => res.redirect()) //This will just need to return the data we get
+   // .catch(err => {console.log(err)})
+   // // } else {
+   // //     res.redirect('/products');
+   // // }
 };
-
 
 exports.postAddBracket = (req, res, next) => {
    const title = req.body.title;
@@ -64,17 +62,17 @@ exports.postAddBracket = (req, res, next) => {
       title: title,
       creatorId: req.user,
       description: description,
-      participants: [] //may want to change this later
+      participants: [], //may want to change this later
    });
    bracket
-   .save()
-   .then(result => {
-      console.log('Created Bracket');
-      res.redirect('/'); //may want to change this later
-    })
-    .catch(err => {
-      console.log(err); //may want to update this later 
-    });
+      .save()
+      .then((result) => {
+         console.log("Created Bracket");
+         res.redirect("/"); //may want to change this later
+      })
+      .catch((err) => {
+         console.log(err); //may want to update this later
+      });
 };
 
 /***
