@@ -44,7 +44,12 @@ exports.editBracket = (req, res, next) => {};
  *    to make new brackets, then the new bracket
  *    will be saved.
  ***/
-exports.getAddBracket = (req, res, next) => {};
+exports.getAddBracket = (req, res, next) => {
+   res.render('/', {
+      //put anything like pagetitle, hasError, etc here
+      //also change the render path to the proper path
+   });
+};
 
 exports.postAddBracket = (req, res, next) => {
    const title = req.body.title;
