@@ -1,10 +1,10 @@
 /*******************************************
  * These controller functions are for:
  *    getting a users brackets
- *    viewing a specific bracket
- *    editing a bracket
- *    adding a bracket 
- *    deleting a bracket
+ *    viewing a specific bracket (Read)
+ *    editing a bracket (Update)
+ *    adding a bracket (Create)
+ *    deleting a bracket (Delete)
  *******************************************/
 
 const Bracket = require("../models/Bracket");
@@ -44,11 +44,28 @@ exports.editBracket = (req, res, next) => {};
  *    to make new brackets, then the new bracket
  *    will be saved.
  ***/
-exports.getAddBracket = (req, res, next) => {
-   
-};
+exports.getAddBracket = (req, res, next) => {};
 
-exports.postAddBracket = (req, res, next) => {};
+exports.postAddBracket = (req, res, next) => {
+   const title = req.body.title;
+   const description = req.body.description;
+
+   const bracket = new Bracket({
+      title: title,
+      creatorId: req.user,
+      description: description,
+      participants: [] //may want to change this later
+   });
+   bracket
+   .save()
+   .then(result => {
+      console.log('Created Bracket');
+      res.redirect('/'); //may want to change this later
+    })
+    .catch(err => {
+      console.log(err); //may want to update this later 
+    });
+};
 
 /***
  * delete a bracket
