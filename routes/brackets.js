@@ -19,7 +19,6 @@ router.get("/bracket/:bracketId", bracketsController.getOneBracket);
 router.post("/edit-bracket/", bracketsController.editBracket);
 
 // adding a bracket
-router.get("/add-bracket", bracketsController.getAddBracket);
 router.post("/add-bracket", bracketsController.postAddBracket);
 
 // delete a bracket
