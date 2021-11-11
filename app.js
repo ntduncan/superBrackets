@@ -5,7 +5,6 @@ const cors = require("cors");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
 const csrf = require("csurf");
-const homeRoutes = require("./routes/home");
 const bracketsRoutes = require("./routes/brackets");
 const authRoutes = require("./routes/auth");
 const dummyRoutes = require("./routes/dummyJSON");
@@ -47,7 +46,6 @@ app.use(function (req, res, next) {
    next();
 });
 
-app.use(homeRoutes);
 app.use(bracketsRoutes);
 app.use(authRoutes);
 app.use(dummyRoutes);
