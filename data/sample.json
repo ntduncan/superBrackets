@@ -1,105 +1,108 @@
 {
-   "brackets": [
-      {
-         "title": "Bible Bash Bracket",
-         "creatorId": "1ggr32y5rsAfT5",
-         "description": "This is a sample bracket where Mark wins agains Matthew, and John against Luke, and then John wins against Mark.",
-         "participants": [
-            {
-               "name": "Matthew",
-               "round": "1"
-            },
-            {
-               "name": "Mark",
-               "round": "2"
-            },
-            {
-               "name": "Luke",
-               "round": "1"
-            },
-            {
-               "name": "John",
-               "round": "3"
-            }
-         ]
-      },
-      {
-         "title": "1v1 Basket Ball bracket",
-         "creatorId": "25GDa44275",
-         "description": "This is a sample bracket where no one has advanced",
-         "participants": [
-            {
-               "name": "Michael Jordan",
-               "rounds": "1"
-            },
-            {
-               "name": "LeBron James",
-               "rounds": "1"
-            },
-            {
-               "name": "Kareem Abduk-Jabbar",
-               "rounds": "1"
-            },
-            {
-               "name": "Magic Johnson",
-               "rounds": "1"
-            },
-            {
-               "name": "Kobne Bryant",
-               "rounds": "1"
-            },
-            {
-               "name": "Shaquille O'Neal",
-               "rounds": "1"
-            },
-            {
-               "name": "Larry Bird",
-               "rounds": "1"
-            },
-            {
-               "name": "Wilt Chamberlain",
-               "rounds": "1"
-            }
-         ]
-      },
-      {
-         "title": "Car Bracket",
-         "creatorId": "3gfd3aHF455",
-         "description": "This is a bracket where participants have advanced but no one has won yet.",
-         "participants": [
-            {
-               "name": "Toyota",
-               "rounds": "2"
-            },
-            {
-               "name": "Chevy",
-               "rounds": "1"
-            },
-            {
-               "name": "Subaru",
-               "rounds": "3"
-            },
-            {
-               "name": "Ford",
-               "rounds": "2"
-            },
-            {
-               "name": "Dodge",
-               "rounds": "1"
-            },
-            {
-               "name": "Mazda",
-               "rounds": "2"
-            },
-            {
-               "name": "Mistubishi",
-               "rounds": "2"
-            },
-            {
-               "name": "Izuzu",
-               "rounds": "1"
-            }
-         ]
-      }
-   ]
+  "brackets": [
+    {
+      "title": "Bible Bash Bracket",
+      "id": "1",
+      "creatorId": "1ggr32y5rsAfT5",
+      "description": "This is a sample bracket where Mark wins agains Matthew, and John against Luke, and then John wins against Mark.",
+      "participants": [
+        {
+          "name": "Matthew",
+          "round": "1"
+        },
+        {
+          "name": "Mark",
+          "round": "2"
+        },
+        {
+          "name": "Luke",
+          "round": "1"
+        },
+        {
+          "name": "John",
+          "round": "3"
+        }
+      ]
+    },
+    {
+      "title": "1v1 Basket Ball bracket",
+      "id": "2",
+      "creatorId": "25GDa44275",
+      "description": "This is a sample bracket where no one has advanced",
+      "participants": [
+        {
+          "name": "Michael Jordan",
+          "rounds": "1"
+        },
+        {
+          "name": "LeBron James",
+          "rounds": "1"
+        },
+        {
+          "name": "Kareem Abduk-Jabbar",
+          "rounds": "1"
+        },
+        {
+          "name": "Magic Johnson",
+          "rounds": "1"
+        },
+        {
+          "name": "Kobne Bryant",
+          "rounds": "1"
+        },
+        {
+          "name": "Shaquille O'Neal",
+          "rounds": "1"
+        },
+        {
+          "name": "Larry Bird",
+          "rounds": "1"
+        },
+        {
+          "name": "Wilt Chamberlain",
+          "rounds": "1"
+        }
+      ]
+    },
+    {
+      "title": "Car Bracket",
+      "id": "3",
+      "creatorId": "3gfd3aHF455",
+      "description": "This is a bracket where participants have advanced but no one has won yet.",
+      "participants": [
+        {
+          "name": "Toyota",
+          "rounds": "2"
+        },
+        {
+          "name": "Chevy",
+          "rounds": "1"
+        },
+        {
+          "name": "Subaru",
+          "rounds": "3"
+        },
+        {
+          "name": "Ford",
+          "rounds": "2"
+        },
+        {
+          "name": "Dodge",
+          "rounds": "1"
+        },
+        {
+          "name": "Mazda",
+          "rounds": "2"
+        },
+        {
+          "name": "Mistubishi",
+          "rounds": "2"
+        },
+        {
+          "name": "Izuzu",
+          "rounds": "1"
+        }
+      ]
+    }
+  ]
 }
