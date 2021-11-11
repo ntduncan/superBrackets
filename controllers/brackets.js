@@ -36,20 +36,25 @@ exports.getOneBracket = (req, res, next) => {
       });
 };
 
-exports.editBracket = (req, res, next) => {};
-
-/***
- * add a new bracket
- *    this will first get a page that has a form
- *    to make new brackets, then the new bracket
- *    will be saved.
- ***/
-exports.getAddBracket = (req, res, next) => {
-   res.render('/', {
-      //put anything like pagetitle, hasError, etc here
-      //also change the render path to the proper path
-   });
+exports.editBracket = (req, res, next) => {
+   // if(req.session.isLoggedIn){
+      const id = req.params.id;
+      const data = req.body;
+      const bracket = new Bracket({
+         title: title,
+         creatorId: req.user,
+         description: description,
+         participants: [] //may want to change this later
+      });
+      
+      Bracket.findByIdAndUpdate(id, bracket)
+      .then(() => res.redirect()) //This will just need to return the data we get
+      .catch(err => {console.log(err)})
+      // } else {
+      //     res.redirect('/products');
+      // }
 };
+
 
 exports.postAddBracket = (req, res, next) => {
    const title = req.body.title;
