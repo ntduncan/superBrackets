@@ -11,6 +11,17 @@ const Bracket = require("../models/Bracket");
 const User = require("../models/User");
 
 /***
+ * get all  brackets
+ *    get all the brackets
+ ***/
+exports.getAll = (req, res, next) => {
+   Bracket.find().then((bracket) => {
+      let jsonData = bracket;
+      res.json(jsonData);
+   });
+};
+
+/***
  * get all of a user's brackets
  *    get all the brackets that have the
  *    user's id and render them on a page
@@ -36,23 +47,7 @@ exports.getOneBracket = (req, res, next) => {
       });
 };
 
-exports.editBracket = (req, res, next) => {
-   // if(req.session.isLoggedIn){
-   // const id = req.params.id;
-   // const data = req.body;
-   // const bracket = new Bracket({
-   //    title: title,
-   //    creatorId: req.user,
-   //    description: description,
-   //    participants: [] //may want to change this later
-   // });
-   // Bracket.findByIdAndUpdate(id, bracket)
-   // .then(() => res.redirect()) //This will just need to return the data we get
-   // .catch(err => {console.log(err)})
-   // // } else {
-   // //     res.redirect('/products');
-   // // }
-};
+exports.editBracket = (req, res, next) => {};
 
 exports.postAddBracket = (req, res, next) => {
    const title = req.body.title;
