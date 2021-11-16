@@ -26,7 +26,18 @@ exports.getAll = (req, res, next) => {
  *    get all the brackets that have the
  *    user's id and render them on a page
  ***/
-exports.getUserBrackets = (req, res, next) => {};
+exports.getUserBrackets = (req, res, next) => {
+   Bracket.find()
+    .then(brackets => {
+      console.log(brackets);
+      res.json(brackets)
+    })
+    .catch(err => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
+};
 
 /***
  * get/edit a specific bracket
