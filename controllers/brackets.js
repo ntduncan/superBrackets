@@ -49,7 +49,7 @@ exports.getOneBracket = (req, res, next) => {
    const bracketId = req.params.bracketId;
    Bracket.findById(bracketId)
       .then((bracket) => {
-         res.render(/*something*/);
+         res.json(bracket);
       })
       .catch((err) => {
          const error = new Error(err);
