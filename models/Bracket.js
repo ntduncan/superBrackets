@@ -7,11 +7,12 @@ const bracketSchema = new Schema({
       type: String,
       required: true,
    },
-   creatorId: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-   },
+   // user model and auth needs worked out
+   // creatorId: {
+   //    type: Schema.Types.ObjectId,
+   //    ref: "User",
+   //    required: true,
+   // },
    description: {
       type: String,
       required: true,

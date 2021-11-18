@@ -46,9 +46,13 @@ app.use(function (req, res, next) {
    next();
 });
 
+app.use(express.json()); // instead of body parser, body parser is depricated
+app.use(express.urlencoded({ extended: true }));
+
 app.use(bracketsRoutes);
 app.use(authRoutes);
 app.use(dummyRoutes);
+
 // Connections
 mongoose
    .connect(mongoCon, { useNewUrlParser: true, useUnifiedTopology: true })
