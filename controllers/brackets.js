@@ -98,14 +98,19 @@ exports.postDeleteBracket = (req, res, next) => {
    const bracketId = req.headers.bracketid;
    console.log(bracketId);
    deleteQuery = { _id: bracketId };
+   Bracket.findById(bracketId).then((doc) => {
+      if (doc == null) {
+         res.json({ message: "Bracket id was invalid" });
+      }
+   });
    Bracket.deleteOne(deleteQuery, function (err, obj) {
       if (err) throw err;
    });
    Bracket.findById(bracketId).then((doc) => {
       if (doc == null) {
-         res.json({ message: "Bracket id was invalid" });
+         res.json({ message: "Bracket was deleted" });
       } else {
-         res.json({ message: "Bracket was delted" });
+         res.json({ message: "Bracket was not delted" });
       }
    });
 };
