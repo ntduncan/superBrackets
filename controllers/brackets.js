@@ -14,7 +14,7 @@ const User = require("../models/User");
  * get all  brackets
  *    get all the brackets
  ***/
-exports.getAll = (req, res, next) => {
+exports.getAll = (req, res, next) => { // FINISHED
    Bracket.find().then((bracket) => {
       let jsonData = bracket;
       res.json(jsonData);
@@ -63,7 +63,7 @@ exports.postAddBracket = (req, res, next) => {
    const title = req.headers.title;
    const description = req.headers.description;
    const participants = req.headers.participants.split("%"); // should be sent as a list of names separated by commas
-
+   
    let participantsWithRounds = [];
    participants.forEach((person) => {
       let tempPersonObj = {

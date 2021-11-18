@@ -10,11 +10,14 @@
 const express = require("express");
 const router = express.Router();
 const bracketsController = require("../controllers/brackets");
+const bodyParser = require("body-parser");
+
+let urlencodedParser = bodyParser.urlencoded({extended: false})
 
 // getting all brackets
 router.get("/brackets-list", bracketsController.getAll);
 // getting a users brackets
-router.get("/my-brackets", bracketsController.getUserBrackets);
+router.post("/my-brackets", urlencodedParser, bracketsController.getUserBrackets);
 
 // viewing/editing a specific bracket
 router.get("/bracket/:bracketId", bracketsController.getOneBracket);
