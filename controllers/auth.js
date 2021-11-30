@@ -97,9 +97,8 @@ exports.postSignup = (req, res, next) => {
    const confirmPassword = req.body.confirmPassword;
    // want to check if the user email already exists in the database
    User.findOne({ email: email })
-  //  was userDoc previously
-      .then((users) => {
-         if (users) {
+      .then((userDoc) => {
+         if (userDoc) {
             return res.redirect("/signup");
          }
          return bcrypt
