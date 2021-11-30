@@ -45,8 +45,8 @@ exports.postLogin = (req, res, next) => {
    const email = req.body.email;
    const password = req.body.password;
    User.findOne({ email: email }) //check for the user's email
-      .then((user) => {
-         if (!user) {
+      .then((users) => {
+         if (!users) {
             // user not found: login failed. email does not exist in the database
             return res.redirect("/login");
          }
@@ -90,14 +90,16 @@ exports.getSignup = (req, res, next) => {
  * them in the database
  ***/
 exports.postSignup = (req, res, next) => {
+    //  TODO: make sure the password is the same as the confirm password!!!
    // store a new user in the database
    const email = req.body.email;
    const password = req.body.password;
    const confirmPassword = req.body.confirmPassword;
    // want to check if the user email already exists in the database
    User.findOne({ email: email })
-      .then((userDoc) => {
-         if (userDoc) {
+  //  was userDoc previously
+      .then((users) => {
+         if (users) {
             return res.redirect("/signup");
          }
          return bcrypt
@@ -113,7 +115,7 @@ exports.postSignup = (req, res, next) => {
       })
       .then((result) => {
         // do we want to re-direct?
-         res.redirect("/login");  
+        //  res.redirect("/login");  
          console.log("User Created Successfully");
       })
       .catch((err) => {
