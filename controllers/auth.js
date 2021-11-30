@@ -62,7 +62,7 @@ exports.postLogin = (req, res, next) => {
                   return req.session.save((err) => {
                      console.log(err);
                      // return res.redirect("/");
-                     // return res.json("Login Successful!")
+                     return res.json("Login Successful!")
                   });
                   // return res.redirect("/");
                   return res.json("Login Successful!")
