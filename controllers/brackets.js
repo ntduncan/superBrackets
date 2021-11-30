@@ -99,9 +99,9 @@ exports.advanceParticipant = (req, res, next) => {
 };
 
 exports.postAddBracket = (req, res, next) => {
-  const title = req.headers.title;
-  const description = req.headers.description;
-  const participants = req.headers.participants.split("%"); // should be sent as a list of names separated by commas
+  const title = req.title;
+  const description = req.description;
+  const participants = req.participants.split("%"); // should be sent as a list of names separated by commas
 
   let participantsWithRounds = [];
   participants.forEach((person) => {
@@ -134,7 +134,7 @@ exports.postAddBracket = (req, res, next) => {
  ***/
 // this says it is working but it is not
 exports.postDeleteBracket = (req, res, next) => {
-  const bracketId = req.headers.bracketid;
+  const bracketId = req.params.bracketid;
   console.log(bracketId);
   deleteQuery = { _id: bracketId };
   Bracket.findById(bracketId).then((doc) => {
