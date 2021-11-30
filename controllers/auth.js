@@ -124,37 +124,39 @@ exports.getSignup = (req, res, next) => {
 
 // testing a simpler version:
 exports.postSignup = (req, res, next) => {
-   //  TODO: make sure the password is the same as the confirm password!!!
+  //  TODO: make sure the password is the same as the confirm password!!!
   // store a new user in the database
   const email = req.body.email;
   const password = req.body.password;
   const confirmPassword = req.body.confirmPassword;
   // want to check if the user email already exists in the database
   User.findOne({ email: email })
-     .then((userDoc) => {
-      //   if (userDoc) {
-      //      return res.redirect("/signup");
-      //   }
-        return bcrypt
-           .hash(password, 12) //hash the password
-           .then((hashedPassword) => {
-              const user = new User({
-                 email: email,
-                 password: hashedPassword,
-                 usersBrackets: { bracket: [] },
-              });
-              return user.save();
-           });
-     })
-     .then((result) => {
-       // do we want to re-direct?
-       //  res.redirect("/login");  
-       res.json({ message: "User Created Successfully" })
-      //   console.log("User Created Successfully");
-     })
-     .catch((err) => {
-        console.log(err);
-     });
+    .then((userDoc) => {
+        if (userDoc) {
+         res.json({ message: "Signup Failed" });
+         console.log("Signup Failed");
+         //   return res.redirect("/signup");
+        }
+      return bcrypt
+        .hash(password, 12) //hash the password
+        .then((hashedPassword) => {
+          const user = new User({
+            email: email,
+            password: hashedPassword,
+            usersBrackets: { bracket: [] },
+          });
+          return user.save();
+        });
+    })
+    .then((result) => {
+      // do we want to re-direct?
+      //  res.redirect("/login");
+      res.json({ message: "User Created Successfully" });
+      console.log("User Created Successfully");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 /***
