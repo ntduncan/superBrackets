@@ -45,8 +45,8 @@ exports.postLogin = (req, res, next) => {
    const email = req.body.email;
    const password = req.body.password;
    User.findOne({ email: email }) //check for the user's email
-      .then((users) => {
-         if (!users) {
+      .then((user) => {
+         if (!user) {
             // user not found: login failed. email does not exist in the database
             return res.redirect("/login");
          }
