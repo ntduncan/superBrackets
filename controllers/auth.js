@@ -61,7 +61,8 @@ exports.postLogin = (req, res, next) => {
                   req.session.user = user;
                   return req.session.save((err) => {
                      console.log(err);
-                     return res.redirect("/");
+                     // return res.redirect("/");
+                     // return res.json("Login Successful!")
                   });
                   // return res.redirect("/");
                   return res.json("Login Successful!")
@@ -125,6 +126,7 @@ exports.getSignup = (req, res, next) => {
 //       });
 // };
 
+//for some reason all emails are being saved as "@" ?
 // testing a simpler version:
 exports.postSignup = (req, res, next) => {
   //  TODO: make sure the password is the same as the confirm password!!!
