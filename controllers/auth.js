@@ -48,7 +48,8 @@ exports.postLogin = (req, res, next) => {
       .then((user) => {
          if (!user) {
             // user not found: login failed. email does not exist in the database
-            return res.redirect("/login");
+            // return res.redirect("/login");
+            return res.json({ message: "Email Not Found" })
          }
          // compare the typed in password to the hashed password that is stored in the database
          bcrypt
@@ -62,13 +63,15 @@ exports.postLogin = (req, res, next) => {
                      console.log(err);
                      return res.redirect("/");
                   });
-                  return res.redirect("/");
+                  // return res.redirect("/");
+                  return res.json("Login Successful!")
                }
-               res.redirect("/login");
+               // res.redirect("/login");
+               return res.json("Incorrect Password")
             })
             .catch((err) => {
                console.log(err);
-               res.redirect("/login");
+               // res.redirect("/login");
             });
       });
 };
