@@ -112,7 +112,9 @@ exports.postSignup = (req, res, next) => {
             });
       })
       .then((result) => {
-         res.redirect("/login");
+        // do we want to re-direct?
+         res.redirect("/login");  
+         console.log("User Created Successfully");
       })
       .catch((err) => {
          console.log(err);
@@ -125,7 +127,7 @@ exports.postSignup = (req, res, next) => {
 exports.postLogout = (req, res, next) => {
    req.session.destroy((err) => {
       console.log(err);
-      res.redirect("/");
+      res.redirect("/"); 
    });
 };
 
