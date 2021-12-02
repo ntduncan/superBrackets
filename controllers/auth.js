@@ -138,6 +138,7 @@ exports.postSignup = (req, res, next) => {
   User.findOne({ email: email })
     .then((userDoc) => {
         if (userDoc) {
+         //   email already exists
         //  res.json({ message: "Signup Failed" });
          console.log("Signup Failed");
          return res.json({ message: email });
