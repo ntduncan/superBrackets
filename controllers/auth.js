@@ -138,8 +138,8 @@ exports.postSignup = (req, res, next) => {
   User.findOne({ email: email })
     .then((userDoc) => {
         if (userDoc) {
-         res.json({ message: "Signup Failed" });
-        //  res.json({ message: email });
+        //  res.json({ message: "Signup Failed" });
+         res.json({ message: email });
          console.log("Signup Failed");
          //   return res.redirect("/signup");
         }
