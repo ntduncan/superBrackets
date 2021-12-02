@@ -18,23 +18,29 @@ let urlencodedParser = bodyParser.urlencoded({ extended: false });
 router.get("/brackets-list", bracketsController.getAll);
 // getting a users brackets
 router.post(
-  "/my-brackets",
-  urlencodedParser,
-  bracketsController.getUserBrackets
+   "/my-brackets/:userId",
+   urlencodedParser,
+   bracketsController.getUserBrackets
 );
 
 // viewing/editing a specific bracket
 router.get("/bracket/:bracketId", bracketsController.getOneBracket);
 router.get(
-  "/advance-participant/:bracketId/:participantId",
-  bracketsController.advanceParticipant
+   "/advance-participant/:bracketId/:participantId",
+   bracketsController.advanceParticipant
 );
 router.post("/edit-bracket/:bracketId", bracketsController.editBracket);
 
 // adding a bracket
-router.post("/add-bracket", bracketsController.postAddBracket);
+router.post(
+   "/add-bracket/:title/:description/:participants",
+   bracketsController.postAddBracket
+);
 
 // delete a bracket
-router.post("/delete", bracketsController.postDeleteBracket);
+router.get("/delete/:bracketId", bracketsController.deleteBracket);
+
+// search bracket
+router.get("/search/:field/:query", bracketsController.searchBrackets);
 
 module.exports = router;
