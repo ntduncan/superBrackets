@@ -9,7 +9,9 @@ const { check, body } = require("express-validator");
 
 const authController = require("../controllers/auth");
 const User = require("../models/User");
+const bodyParser = require("body-parser");
 
+let urlencodedParser = bodyParser.urlencoded({ extended: false });
 const router = express.Router();
 
 router.get("/login", authController.getLogin);
@@ -74,6 +76,7 @@ router.post(
 // testing edits
 router.post(
    "/signup",
+   urlencodedParser,
    [
       check("email")
          .isEmail()
