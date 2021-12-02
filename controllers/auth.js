@@ -139,7 +139,7 @@ exports.postSignup = (req, res, next) => {
     .then((userDoc) => {
         if (userDoc) {
         //  res.json({ message: "Signup Failed" });
-         res.json({ message: email });
+         res.json({ message: req.body.email });
          console.log("Signup Failed");
          //   return res.redirect("/signup");
         }
