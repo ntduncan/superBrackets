@@ -139,8 +139,9 @@ exports.postSignup = (req, res, next) => {
     .then((userDoc) => {
         if (userDoc) {
         //  res.json({ message: "Signup Failed" });
-         res.json({ message: email });
          console.log("Signup Failed");
+         return res.json({ message: email });
+         // res.json({ message: email });
          //   return res.redirect("/signup");
         }
       return bcrypt
