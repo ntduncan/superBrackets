@@ -138,9 +138,11 @@ exports.postSignup = (req, res, next) => {
   User.findOne({ email: email })
     .then((userDoc) => {
         if (userDoc) {
+         //   email already exists
         //  res.json({ message: "Signup Failed" });
-         res.json({ message: email });
          console.log("Signup Failed");
+         return res.json({ message: email });
+         // res.json({ message: email });
          //   return res.redirect("/signup");
         }
       return bcrypt
