@@ -5,14 +5,16 @@
  *    resetting passwords
  *******************************************/
 
-//  const crypto = require('crypto');
+const crypto = require('crypto'); //for generating password reset tokens
 
 const bcrypt = require("bcrypt"); //for hashing passwords
-//  const nodemailer = require('nodemailer');
-//  const sendgridTransport = require('nodemailer-sendgrid-transport');
-//  const { validationResult } = require('express-validator/check');
+// const nodemailer = require('nodemailer');
+// const sendgridTransport = require('nodemailer-sendgrid-transport');
+// const { validationResult } = require('express-validator/check');
 
 const User = require("../models/User");
+// environment variable for the api key for sendgrid 
+// const sendgrid_key = process.env.SENDGRID_KEY;
 
 // for sending an email with sendgrid
 // if using sendgrid, the api key and other information cannot be made public
@@ -20,7 +22,7 @@ const User = require("../models/User");
 //    sendgridTransport({
 //      auth: {
 //        api_key:
-//         '' //<-put api key here
+//         '' //<-put api key here use environment variable and add to heroku
 //      }
 //    })
 //  );
@@ -192,7 +194,54 @@ exports.postLogout = (req, res, next) => {
 
 exports.getReset = (req, res, next) => {};
 
-exports.postReset = (req, res, next) => {};
+exports.postReset = (req, res, next) => {
+   // generate a random bytes for reseting passwords!!!
+  crypto.randomBytes(32, (err, buffer) => {
+   if(err) {
+     console.log(err);
+     return res.redirect('/reset');
+   }
+   // generate a token from the buffer 
+   // convert the buffer to a hex number
+   const token = buffer.toString('hex');
+
+   // find the user then store the token in the user object
+   // use mongoose's findOne method to find the user
+   User.findOne({email: req.body.email})
+   .then(user => {
+     // if the user does not exist, flash an error and redirect them to the same page (know how flash works and how to use it!)
+     if (!user){
+       req.flash('error', 'No account with that email found.');
+       return res.redirect('reset');
+     }
+     // if the user exists, give them a reset password token and an expiration time for that token
+     user.resetToken = token;
+     // this makes it expire 1 hour from the current time (it's in miliseconds)
+     user.resetTokenExpiration = Date.now() + 3600000;
+     return user.save(); //save the user
+   })
+   .then(result => {
+     // send the token reset email.
+     // use `` to do the html on multiple lines and use ${} to put in a variable
+     // !!!!!will need to change the link when doing it on heroku!!!!!!!!
+     // make it send the token so they can copy it or with a heroku link!!!
+     res.redirect('/');
+     transporter.sendMail({
+       to: req.body.email,
+       from: '', // <- put the email here
+       subject: 'Super Brackets Password Reset',
+       html: `
+       <p>You requested a password reset</p>
+       <p>Click this <a href="http://localhost:3000/reset/${token}"link</a> to set a new password.</p>
+       `
+     });
+   })
+   .catch(err => {
+     console.log(err);
+   });
+
+ });
+};
 
 exports.getNewPassword = (req, res, next) => {};
 

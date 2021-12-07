@@ -10,6 +10,8 @@ const userSchema = new Schema({
       type: String,
       required: true,
    },
+   resetToken: String, // for the reseting passwords
+   resetTokenExpiration: Date, // for the reseting passwords
    usersBrackets: {
       bracket: [
          {
