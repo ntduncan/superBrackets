@@ -48,8 +48,7 @@ exports.postLogin = (req, res, next) => {
       .then((user) => {
          if (!user) {
             // user not found: login failed. email does not exist in the database
-            // return res.redirect("/login");
-            return res.json({ message: "Email Not Found" })
+            res.json({ message: "Email Not Found" })
          }
          // compare the typed in password to the hashed password that is stored in the database
          bcrypt
@@ -59,20 +58,16 @@ exports.postLogin = (req, res, next) => {
                if (doMatch) {
                   req.session.isLoggedIn = true;
                   req.session.user = user;
-                  return req.session.save((err) => {
+                  req.session.save((err) => {
                      console.log(err);
-                     // return res.redirect("/");
-                     return res.json("Login Successful!")
+                     res.json("Login Successful!")
                   });
-                  // return res.redirect("/");
-                  return res.json("Login Successful!")
+                  res.json("Login Successful!")
                }
-               // res.redirect("/login");
-               return res.json("Incorrect Password")
+               res.json("Incorrect Password")
             })
             .catch((err) => {
                console.log(err);
-               // res.redirect("/login");
             });
       });
 };
@@ -89,45 +84,11 @@ exports.getSignup = (req, res, next) => {
    });
 };
 
+
 /***
  * creates a new user and stores
  * them in the database
  ***/
-// exports.postSignup = (req, res, next) => {
-//     //  TODO: make sure the password is the same as the confirm password!!!
-//    // store a new user in the database
-//    const email = req.body.email;
-//    const password = req.body.password;
-//    const confirmPassword = req.body.confirmPassword;
-//    // want to check if the user email already exists in the database
-//    User.findOne({ email: email })
-//       .then((userDoc) => {
-//          if (userDoc) {
-//             return res.redirect("/signup");
-//          }
-//          return bcrypt
-//             .hash(password, 12) //hash the password
-//             .then((hashedPassword) => {
-//                const user = new User({
-//                   email: email,
-//                   password: hashedPassword,
-//                   usersBrackets: { bracket: [] },
-//                });
-//                return user.save();
-//             });
-//       })
-//       .then((result) => {
-//         // do we want to re-direct?
-//         //  res.redirect("/login");  
-//          console.log("User Created Successfully");
-//       })
-//       .catch((err) => {
-//          console.log(err);
-//       });
-// };
-
-//for some reason all emails are being saved as "@" ?
-// testing a simpler version:
 exports.postSignup = (req, res, next) => {
   //  TODO: make sure the password is the same as the confirm password!!!
   // store a new user in the database
@@ -139,11 +100,8 @@ exports.postSignup = (req, res, next) => {
     .then((userDoc) => {
         if (userDoc) {
          //   email already exists
-        //  res.json({ message: "Signup Failed" });
          console.log("Signup Failed");
-         return res.json({ message: email });
-         // res.json({ message: email });
-         //   return res.redirect("/signup");
+         return res.json({ message: "Signup Failed" });
         }
       return bcrypt
         .hash(password, 12) //hash the password
@@ -157,8 +115,6 @@ exports.postSignup = (req, res, next) => {
         });
     })
     .then((result) => {
-      // do we want to re-direct?
-      //  res.redirect("/login");
       res.json({ message: "User Created Successfully" });
       console.log("User Created Successfully");
     })
