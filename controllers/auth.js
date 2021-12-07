@@ -8,8 +8,8 @@
 const crypto = require('crypto'); //for generating password reset tokens
 
 const bcrypt = require("bcrypt"); //for hashing passwords
-// const nodemailer = require('nodemailer');
-// const sendgridTransport = require('nodemailer-sendgrid-transport');
+const nodemailer = require('nodemailer');
+const sendgridTransport = require('nodemailer-sendgrid-transport');
 // const { validationResult } = require('express-validator/check');
 
 const User = require("../models/User");
@@ -194,6 +194,9 @@ exports.postLogout = (req, res, next) => {
 
 exports.getReset = (req, res, next) => {};
 
+/***
+ * Sends the user an email with a token so they can reset their password
+ ***/
 exports.postReset = (req, res, next) => {
    // generate a random bytes for reseting passwords!!!
   crypto.randomBytes(32, (err, buffer) => {
@@ -209,10 +212,12 @@ exports.postReset = (req, res, next) => {
    // use mongoose's findOne method to find the user
    User.findOne({email: req.body.email})
    .then(user => {
-     // if the user does not exist, flash an error and redirect them to the same page (know how flash works and how to use it!)
+     // if the user does not exist, send an error
      if (!user){
-       req.flash('error', 'No account with that email found.');
-       return res.redirect('reset');
+      //  req.flash('error', 'No account with that email found.');
+      //  return res.redirect('reset');
+      console.log("No account with that email found.");
+      return res.json({ message: "No account with that email found." });
      }
      // if the user exists, give them a reset password token and an expiration time for that token
      user.resetToken = token;
@@ -222,7 +227,6 @@ exports.postReset = (req, res, next) => {
    })
    .then(result => {
      // send the token reset email.
-     // use `` to do the html on multiple lines and use ${} to put in a variable
      // !!!!!will need to change the link when doing it on heroku!!!!!!!!
      // make it send the token so they can copy it or with a heroku link!!!
      res.redirect('/');
@@ -245,4 +249,7 @@ exports.postReset = (req, res, next) => {
 
 exports.getNewPassword = (req, res, next) => {};
 
+/***
+ * Lets the user create a new password, if they have a token
+ ***/
 exports.postNewPassword = (req, res, next) => {};
