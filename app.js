@@ -5,9 +5,11 @@ const cors = require("cors");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
 const csrf = require("csurf");
+const jwt = require('jsonwebtoken');
 const bracketsRoutes = require("./routes/brackets");
 const authRoutes = require("./routes/auth");
 const dummyRoutes = require("./routes/dummyJSON");
+const User = require("./models/User");
 
 // Database Setup
 // Connect to MongoDB
@@ -20,11 +22,49 @@ const app = express();
 const csrfProtection = csrf();
 const PORT = process.env.PORT || 3000;
 
-// const store = new MongoDBStore({
-//    //USED TO STORE SESSION IN MONGODB
-//    uri: MONGODB_URI,
-//    collection: 'sessions'
-//  });
+const store = new MongoDBStore({
+   //USED TO STORE SESSION IN MONGODB
+   uri: MONGODB_URI,
+   collection: 'sessions'
+ });
+
+const corsOptions = {
+   origin: "http://superbrackets.herokuapp.com/",
+   optionsSuccessStatus: 200,
+ };
+ app
+   .use(cors(corsOptions))
+   .use(
+     session({
+       secret: "my secret",
+       resave: false,
+       saveUninitialized: false,
+       store: store,
+     })
+   )
+   // .use(csrfProtection) //Saves csrf token
+ 
+ app.use((req, res, next) => {
+   if (!req.session.user) {
+     return next();
+   }
+   User.findById(req.session.user._id)
+     .then(user => {
+       req.user = user;
+       next();
+     })
+     .catch(err => console.log(err));
+ });
+ 
+ app.use((req, res, next) => {
+   res.locals.isAuthenticated = req.session.isLoggedIn;
+   // res.locals.csrfToken = req.csrfToken();
+   next();
+ });
+ 
+
+
+
 
 app.use(express.static(__dirname + "/public")) //static files
    .set("view engine", "ejs");
