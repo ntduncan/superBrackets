@@ -10,22 +10,21 @@ const crypto = require('crypto'); //for generating password reset tokens
 const bcrypt = require("bcrypt"); //for hashing passwords
 const nodemailer = require('nodemailer');
 const sendgridTransport = require('nodemailer-sendgrid-transport');
-// const { validationResult } = require('express-validator/check');
+const { validationResult } = require('express-validator/check');
 
 const User = require("../models/User");
 // environment variable for the api key for sendgrid 
-// const sendgrid_key = process.env.SENDGRID_KEY;
+const sendgrid_key = process.env.SENDGRID_KEY;
 
 // for sending an email with sendgrid
 // if using sendgrid, the api key and other information cannot be made public
-//  const transporter = nodemailer.createTransport(
-//    sendgridTransport({
-//      auth: {
-//        api_key:
-//         '' //<-put api key here use environment variable and add to heroku
-//      }
-//    })
-//  );
+ const transporter = nodemailer.createTransport(
+   sendgridTransport({
+     auth: {
+       api_key: sendgrid_key //<- put api key here use environment variable and  TODO add to heroku
+     }
+   })
+ );
 
 /***
  * gets the login page
@@ -202,7 +201,8 @@ exports.postReset = (req, res, next) => {
   crypto.randomBytes(32, (err, buffer) => {
    if(err) {
      console.log(err);
-     return res.redirect('/reset');
+   //   return res.redirect('/reset');
+     return res.json("Error");
    }
    // generate a token from the buffer 
    // convert the buffer to a hex number
@@ -223,20 +223,22 @@ exports.postReset = (req, res, next) => {
      user.resetToken = token;
      // this makes it expire 1 hour from the current time (it's in miliseconds)
      user.resetTokenExpiration = Date.now() + 3600000;
-     return user.save(); //save the user
+     return user.save(); //save the token info into the user
    })
    .then(result => {
+      // TODO
      // send the token reset email.
      // !!!!!will need to change the link when doing it on heroku!!!!!!!!
      // make it send the token so they can copy it or with a heroku link!!!
      res.redirect('/');
      transporter.sendMail({
        to: req.body.email,
-       from: '', // <- put the email here
+       from: 'cheddagang32@gmail.com', // <- put the email here
        subject: 'Super Brackets Password Reset',
        html: `
        <p>You requested a password reset</p>
        <p>Click this <a href="http://localhost:3000/reset/${token}"link</a> to set a new password.</p>
+       <P>Your token is: ${token}</P>
        `
      });
    })
