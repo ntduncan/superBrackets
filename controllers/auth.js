@@ -30,76 +30,6 @@ const sendgrid_key = process.env.SENDGRID_KEY;
    })
  );
 
-/***
- * gets the login page
- ***/
-exports.getLogin = (req, res, next) => {
-  const email = req.body.email;
-  const password = req.body.password;
-
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    res.status(422).render("auth/login", {
-      path: "/login",
-      pageTitle: "Login",
-      errorMessage: errors.array()[0].msg,
-      oldInput: {
-        email: email,
-        password: password,
-      },
-      validationErrors: errors.array(),
-    });
-  }
-
-  User.findOne({ email: email })
-    .then((user) => {
-      if (!user) {
-        res.status(422).render("auth/login", {
-          path: "/login",
-          pageTitle: "Login",
-          errorMessage: "Invalid email or password.",
-          oldInput: {
-            email: email,
-            password: password,
-          },
-          validationErrors: [],
-        });
-      }
-      bcrypt
-        .compare(password, user.password)
-        .then((doMatch) => {
-          if (doMatch) {
-
-
-            req.session.isLoggedIn = true;
-            req.session.user = user;
-            req.session.save((err) => {
-              console.log(err);
-              // res.redirect("/");
-            });
-          }
-          res.status(422).render("auth/login", {
-            path: "/login",
-            pageTitle: "Login",
-            errorMessage: "Invalid email or password.",
-            oldInput: {
-              email: email,
-              password: password,
-            },
-            validationErrors: [],
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-          res.redirect("/login");
-        });
-    })
-    .catch((err) => {
-      const error = new Error(err);
-      error.httpStatusCode = 500;
-      next(error);
-    });
-};
 
 /***
  * logins in the user
@@ -142,7 +72,6 @@ exports.postLogin = (req, res, next) => {
  * them in the database
  ***/
 exports.postSignup = (req, res, next) => {
-  //  TODO: make sure the password is the same as the confirm password!!!
   // store a new user in the database
   const email = req.body.email;
   const password = req.body.password;
@@ -181,12 +110,10 @@ exports.postSignup = (req, res, next) => {
 exports.postLogout = (req, res, next) => {
   req.session.destroy((err) => {
     console.log(err);
-    // res.redirect("/");
     res.json({ message: "Logout Successful" });
   });
 };
 
-exports.getReset = (req, res, next) => {};
 
 /***
  * Sends the user an email with a token so they can reset their password
@@ -196,7 +123,6 @@ exports.postReset = (req, res, next) => {
   crypto.randomBytes(32, (err, buffer) => {
    if(err) {
      console.log(err);
-   //   return res.redirect('/reset');
      return res.json("Error");
    }
    // generate a token from the buffer 
@@ -209,8 +135,6 @@ exports.postReset = (req, res, next) => {
    .then(user => {
      // if the user does not exist, send an error
      if (!user){
-      //  req.flash('error', 'No account with that email found.');
-      //  return res.redirect('reset');
       console.log("No account with that email found.");
       return res.json({ message: "No account with that email found." });
      }
@@ -221,53 +145,29 @@ exports.postReset = (req, res, next) => {
      return user.save(); //save the token info into the user
    })
    .then(result => {
-      // TODO
      // send the token reset email.
-     // !!!!!will need to change the link when doing it on heroku!!!!!!!!
-     // make it send the token so they can copy it or with a heroku link!!!
-    //  res.redirect('/');
-    res.json("Email sent");
      transporter.sendMail({
        to: req.body.email,
        from: 'Super Brackets Support <cheddagang32@gmail.com>', 
        subject: 'Super Brackets Password Reset',
        html: `
        <p>You requested a password reset</p>
-       <p>Click this <a href="http://localhost:3000/reset/${token}"link</a> to set a new password.</p> 
+       <p>Click this <a href="https://superbrackets.herokuapp.com/new-password/${token}">link</a> to set a new password.</p> 
        <P>Your token is: ${token}</P>
        `
-     }); // TODO make the link the heroku link instead of local host?!
+     }); 
+     res.json("Email sent");
    })
    .catch(err => {
      console.log(err);
    });
-
  });
 };
 
-exports.getNewPassword = (req, res, next) => {
-      // // make sure that a token exists for the url
-      // const token = req.params.token;
-      // // see if a token exists for a user and if it is not expired.
-      // // $gt means greater than (so if the time is greater than now (in the future))
-      // User.findOne({resetToken: token, resetTokenExpiration: {$gt: Date.now()}})
-      // .then(user =>{
-      //   let message = req.flash('error');
-      //   if (message.length > 0) {
-      //     message = message[0];
-      //   } else {
-      //     message = null;
-      //   }
-      // })
-      //   .catch(err => {
-      //     console.log(err);
-      //   });
-};
 
 /***
  * Lets the user create a new password, if they have a token
  ***/
-// FIXME
 exports.postNewPassword = (req, res, next) => {
 
   const newPassword = req.body.password;
@@ -295,7 +195,6 @@ exports.postNewPassword = (req, res, next) => {
       return resetUser.save();
     })
     .then(result => {
-      // redirect to login page, once they are finished
       res.json("Password changed, sucessfully!");
     })
     .catch(err => {
