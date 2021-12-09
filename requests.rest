@@ -15,10 +15,9 @@ Content-Type: application/json
 # POST LOGIN
 # This is the endpoint to login. It will return an
 # access token that can be used to access protected 
-# endpoints
+#endpoints
 POST http://127.0.0.1:3000/login 
 Content-Type: application/json
-
 {
     "email": "testing@test.com",
     "password": "password"
