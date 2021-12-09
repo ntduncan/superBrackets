@@ -21,7 +21,7 @@ const sendgrid_key = process.env.SENDGRID_KEY;
  const transporter = nodemailer.createTransport(
    sendgridTransport({
      auth: {
-       api_key: sendgrid_key //<- put api key here use environment variable and  TODO add to heroku
+       api_key: sendgrid_key 
      }
    })
  );
@@ -230,10 +230,11 @@ exports.postReset = (req, res, next) => {
      // send the token reset email.
      // !!!!!will need to change the link when doing it on heroku!!!!!!!!
      // make it send the token so they can copy it or with a heroku link!!!
-     res.redirect('/');
+    //  res.redirect('/');
+    res.json("Email sent");
      transporter.sendMail({
        to: req.body.email,
-       from: 'cheddagang32@gmail.com', // <- put the email here
+       from: 'Super Brackets Support <cheddagang32@gmail.com>', 
        subject: 'Super Brackets Password Reset',
        html: `
        <p>You requested a password reset</p>
@@ -249,9 +250,63 @@ exports.postReset = (req, res, next) => {
  });
 };
 
-exports.getNewPassword = (req, res, next) => {};
+exports.getNewPassword = (req, res, next) => {
+      // // make sure that a token exists for the url
+      // const token = req.params.token;
+      // // see if a token exists for a user and if it is not expired.
+      // // $gt means greater than (so if the time is greater than now (in the future))
+      // User.findOne({resetToken: token, resetTokenExpiration: {$gt: Date.now()}})
+      // .then(user =>{
+      //   let message = req.flash('error');
+      //   if (message.length > 0) {
+      //     message = message[0];
+      //   } else {
+      //     message = null;
+      //   }
+      // })
+      //   .catch(err => {
+      //     console.log(err);
+      //   });
+};
 
 /***
  * Lets the user create a new password, if they have a token
  ***/
-exports.postNewPassword = (req, res, next) => {};
+// FIXME
+exports.postNewPassword = (req, res, next) => {
+
+  const newPassword = req.body.password;
+  const userId = req.body.userId;
+  const passwordToken =  req.params.token;
+  let resetUser;
+
+  // find a user that has the same token as the passwordtoken, hasn't expired, and the userId's are the same
+  User.findOne({
+    resetToken: passwordToken,
+     resetTokenExpiration: {$gt: Date.now()},
+     _id: userId
+    })  
+    .then(user =>{
+      resetUser = user;
+      // need to hash the new password!!!
+     return bcrypt.hash(newPassword, 12);
+    })
+    .then(hashedPassword => {
+      resetUser.password = hashedPassword;
+      // reset the tokens and the expiration dates to undefined (so they don't exist any more)
+      resetUser.resetToken = undefined;
+      resetUser.resetTokenExpiration = undefined;
+      // save the info into the database
+      return resetUser.save();
+    })
+    .then(result => {
+      // redirect to login page, once they are finished
+      res.json("Password changed, sucessfully!");
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+};
+
+
