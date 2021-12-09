@@ -1,15 +1,42 @@
+###
+# POST SIGN_UP
+# This call will create a new user account
+POST http://127.0.0.1:3000/signup
+Content-Type: application/json
+
+{
+    "email": "testing@test.com",
+    "password": "password",
+    "confirmPassword": "password"
+}
+
+
+###
+# POST LOGIN
+# This is the endpoint to login. It will return an
+# access token that can be used to access protected 
+# endpoints
 POST http://127.0.0.1:3000/login 
 Content-Type: application/json
 
 {
-    "email": "nateduncan0@gmail.com",
+    "email": "testing@test.com",
     "password": "password"
 }
 
 ###
+# GET BRACKET
+# This call returns a single bracket
+GET http://127.0.0.1:3000/bracket/61a87596f161526f1bbb80d4
 
+
+###
+# GET ADVANCE_PARTICIPANT
+# This request will advance the first person in the previous bracket
 GET http://127.0.0.1:3000/advance-participant/61a87596f161526f1bbb80d4/61a87596f161526f1bbb80d5
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0JyYWNrZXRzIjp7ImJyYWNrZXQiOltdfSwiX2lkIjoiNjFiMTdmMzQzNjlhY2ZiMGFkNjIwZTNiIiwiZW1haWwiOiJuYXRlZHVuY2FuMEBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMiRuWjl0Q3FmWmZJWkF4TmNWVnVDWUVlSU9JZEpneWtqMlAyTWxxWTh6VlN0VGtpZWRFNFZ5MiIsIl9fdiI6MCwiaWF0IjoxNjM5MDIzMjUwfQ.LBuhMhHJ95NTtCX1ojeU7zn7kHK9Oz6_OjjyqzOcrTE
 
+
 ###
+# This is to verify that the change was made in ther server
 GET http://127.0.0.1:3000/bracket/61a87596f161526f1bbb80d4
