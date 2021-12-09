@@ -238,10 +238,10 @@ exports.postReset = (req, res, next) => {
        subject: 'Super Brackets Password Reset',
        html: `
        <p>You requested a password reset</p>
-       <p>Click this <a href="http://localhost:3000/reset/${token}"link</a> to set a new password.</p>
+       <p>Click this <a href="http://localhost:3000/reset/${token}"link</a> to set a new password.</p> 
        <P>Your token is: ${token}</P>
        `
-     });
+     }); // TODO make the link the heroku link instead of local host?!
    })
    .catch(err => {
      console.log(err);
