@@ -10,13 +10,14 @@ const { check, body } = require("express-validator");
 const authController = require("../controllers/auth");
 const User = require("../models/User");
 const bodyParser = require("body-parser");
+const isAuth = require("../middleware/isAuth")
 
 let urlencodedParser = bodyParser.urlencoded({ extended: false });
 const router = express.Router();
 
-router.get("/login", authController.getLogin);
+// router.get("/login", authController.getLogin);
 
-router.get("/signup", authController.getSignup);
+// router.get("/signup", authController.getSignup);
 
 router.post(
    "/login",
@@ -71,7 +72,7 @@ router.post(
 
 router.post("/logout", authController.postLogout);
 
-router.get("/reset", authController.getReset);
+// router.get("/reset", authController.getReset);
 
 router.post("/reset", authController.postReset);
 

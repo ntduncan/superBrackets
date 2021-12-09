@@ -6,11 +6,15 @@
  *******************************************/
 
 const crypto = require('crypto'); //for generating password reset tokens
-
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt"); //for hashing passwords
 const nodemailer = require('nodemailer');
 const sendgridTransport = require('nodemailer-sendgrid-transport');
 const { validationResult } = require('express-validator/check');
+// const { validationResult} = require('express-validator')
+
+const ACCESS_TOKEN_SECRET = '6611ea13ab94cc3807eadcd37857bdc802f9ce3acd8d2c16867e31e5f6b5d500caaee017ea461fdae265a55ffa57a640662a7c4eb45c0ea4bb8cf27ae1c774a1'; //TODO: Make ENV VAR
+const REFRESH_TOKEN = '1ed7f2989a06f9a5fea38c8a752f24447f347a315c6df63b7a3ba2a9719a9baffef307976306bf287e833ce38d47b1d0cdaf1198df94dae46334389fe72de011'; //TODO: Make ENV VAR
 
 const User = require("../models/User");
 // environment variable for the api key for sendgrid 
@@ -65,11 +69,13 @@ exports.getLogin = (req, res, next) => {
         .compare(password, user.password)
         .then((doMatch) => {
           if (doMatch) {
+
+
             req.session.isLoggedIn = true;
             req.session.user = user;
             req.session.save((err) => {
               console.log(err);
-              res.redirect("/");
+              // res.redirect("/");
             });
           }
           res.status(422).render("auth/login", {
@@ -114,13 +120,13 @@ exports.postLogin = (req, res, next) => {
         .then((doMatch) => {
           // do this if the passwords match
           if (doMatch) {
-            // req.session.isLoggedIn = true;
-            // req.session.user = user;
-            // req.session.save((err) => {
-            //   console.log(err);
-            //   res.json("Login Successful!");
-            // });
-            res.json("Login Successful!");
+            console.log()
+            //Create JWT if they have valid credentials
+            const accessToken = jwt.sign(JSON.parse(JSON.stringify(user)), process.env.ACCESS_TOKEN_SECRET);
+            req.user = user; 
+
+            //Send Access Token back to user
+            res.json({ accessToken: accessToken }) //Send access token to the user
           }
           res.json("Incorrect Password");
         })
@@ -130,17 +136,6 @@ exports.postLogin = (req, res, next) => {
     });
 };
 
-/***
- * gets the signup page
- ***/
-exports.getSignup = (req, res, next) => {
-  res.render("/", {
-    //<-put the signup route here
-    // path: '/signup',
-    // pageTitle: 'Signup',
-    // isAuthenticated: false
-  });
-};
 
 /***
  * creates a new user and stores

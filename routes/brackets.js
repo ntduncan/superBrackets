@@ -9,8 +9,11 @@
 // const path = require("path");
 const express = require("express");
 const router = express.Router();
+
 const bracketsController = require("../controllers/brackets");
 const bodyParser = require("body-parser");
+const jwt = require("jsonwebtoken");
+const isAuth = require("../middleware/isAuth.js");
 
 let urlencodedParser = bodyParser.urlencoded({ extended: false });
 
@@ -25,10 +28,9 @@ router.post(
 
 // viewing/editing a specific bracket
 router.get("/bracket/:bracketId", bracketsController.getOneBracket);
-router.get(
-   "/advance-participant/:bracketId/:participantId",
-   bracketsController.advanceParticipant
-);
+
+router.get("/advance-participant/:bracketId/:participantId", isAuth, bracketsController.advanceParticipant);
+
 router.post("/edit-bracket/:bracketId", bracketsController.editBracket);
 
 // adding a bracket
