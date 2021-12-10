@@ -31,16 +31,17 @@ router.get("/bracket/:bracketId", bracketsController.getOneBracket);
 
 router.get("/advance-participant/:bracketId/:participantId", isAuth, bracketsController.advanceParticipant);
 
-router.post("/edit-bracket/:bracketId", bracketsController.editBracket);
+router.post("/edit-bracket/:bracketId", isAuth, bracketsController.editBracket);
 
 // adding a bracket
 router.post(
    "/add-bracket/:title/:description/:participants",
+   isAuth,
    bracketsController.postAddBracket
 );
 
 // delete a bracket
-router.get("/delete/:bracketId", bracketsController.deleteBracket);
+router.get("/delete/:bracketId", isAuth, bracketsController.deleteBracket);
 
 // search bracket
 router.get("/search/:field/:query", bracketsController.searchBrackets);

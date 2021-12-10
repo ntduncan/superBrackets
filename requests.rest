@@ -23,19 +23,37 @@ Content-Type: application/json
     "password": "password"
 }
 
+
+###
+# POST ADD BRACKET
+POST http://127.0.0.1:3000/add-bracket/Sample bracket/This is a test/Player 1@Player 2@Player 3@Player 4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0JyYWNrZXRzIjp7ImJyYWNrZXQiOltdfSwiX2lkIjoiNjFiMTdmMzQzNjlhY2ZiMGFkNjIwZTNiIiwiZW1haWwiOiJuYXRlZHVuY2FuMEBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMiRuWjl0Q3FmWmZJWkF4TmNWVnVDWUVlSU9JZEpneWtqMlAyTWxxWTh6VlN0VGtpZWRFNFZ5MiIsIl9fdiI6MCwiaWF0IjoxNjM5MDIzMjUwfQ.LBuhMhHJ95NTtCX1ojeU7zn7kHK9Oz6_OjjyqzOcrTE
+
+@ourBracketID = ""
+@ourParticipantID = ""
+
 ###
 # GET BRACKET
-# This call returns a single bracket
-GET http://127.0.0.1:3000/bracket/61a87596f161526f1bbb80d4
-
+# This call returns the bracket we made
+GET http://127.0.0.1:3000/bracket/{{ourBracketID}}
 
 ###
 # GET ADVANCE_PARTICIPANT
 # This request will advance the first person in the previous bracket
-GET http://127.0.0.1:3000/advance-participant/61a87596f161526f1bbb80d4/61a87596f161526f1bbb80d5
+GET http://127.0.0.1:3000/advance-participant/{{ourBracketID}}/{{ourParticipantID}}
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0JyYWNrZXRzIjp7ImJyYWNrZXQiOltdfSwiX2lkIjoiNjFiMTdmMzQzNjlhY2ZiMGFkNjIwZTNiIiwiZW1haWwiOiJuYXRlZHVuY2FuMEBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMiRuWjl0Q3FmWmZJWkF4TmNWVnVDWUVlSU9JZEpneWtqMlAyTWxxWTh6VlN0VGtpZWRFNFZ5MiIsIl9fdiI6MCwiaWF0IjoxNjM5MDIzMjUwfQ.LBuhMhHJ95NTtCX1ojeU7zn7kHK9Oz6_OjjyqzOcrTE
 
+###
+# GET BRACKET
+# Testing that the participant was advanced
+GET http://127.0.0.1:3000/bracket/{{ourBracketID}}
 
 ###
-# This is to verify that the change was made in ther server
-GET http://127.0.0.1:3000/bracket/61a87596f161526f1bbb80d4
+# GET DELETE BRACKET
+# deleting the bracket we made
+http://127.0.0.1:3000/delete/{{ourBracketID}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0JyYWNrZXRzIjp7ImJyYWNrZXQiOltdfSwiX2lkIjoiNjFiMTdmMzQzNjlhY2ZiMGFkNjIwZTNiIiwiZW1haWwiOiJuYXRlZHVuY2FuMEBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMiRuWjl0Q3FmWmZJWkF4TmNWVnVDWUVlSU9JZEpneWtqMlAyTWxxWTh6VlN0VGtpZWRFNFZ5MiIsIl9fdiI6MCwiaWF0IjoxNjM5MDIzMjUwfQ.LBuhMhHJ95NTtCX1ojeU7zn7kHK9Oz6_OjjyqzOcrTE
+
+###
+# Showing the bracket was deleted
+GET http://127.0.0.1:3000/bracket/{{ourBracketID}}
