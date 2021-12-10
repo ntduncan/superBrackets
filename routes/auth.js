@@ -10,7 +10,6 @@ const { check, body } = require("express-validator");
 const authController = require("../controllers/auth");
 const User = require("../models/User");
 const bodyParser = require("body-parser");
-const isAuth = require("../middleware/isAuth");
 
 let urlencodedParser = bodyParser.urlencoded({ extended: false });
 const router = express.Router();
@@ -66,10 +65,15 @@ router.post(
   authController.postSignup
 );
 
-router.post("/logout", authController.postLogout);
+// router.post("/logout", authController.postLogout); //Replaced with a delete route for deleting the refresh token and user session
 
 router.post("/reset", authController.postReset);
 
 router.post("/new-password/:token", authController.postNewPassword);
+
+router.post('/token', authController.postToken);
+
+router.delete('/logout', authController.deleteLogout)
+
 
 module.exports = router;

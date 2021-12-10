@@ -4,8 +4,6 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
-const csrf = require("csurf");
-const jwt = require('jsonwebtoken');
 
 const bracketsRoutes = require("./routes/brackets");
 const authRoutes = require("./routes/auth");
@@ -20,7 +18,6 @@ const MONGODB_URI = `mongodb+srv://${username}:${password}@cluster0.vctnn.mongod
 const mongoCon = process.env.mongoCon || MONGODB_URI;
 
 const app = express();
-const csrfProtection = csrf();
 const PORT = process.env.PORT || 3000;
 
 const store = new MongoDBStore({

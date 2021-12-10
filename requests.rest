@@ -1,4 +1,10 @@
 ###
+# GET BRACKETS_LIST
+# This call returns all brackets in the server 
+GET http://127.0.0.1:3000/brackets-list
+
+
+###
 # POST SIGN_UP
 # This call will create a new user account
 POST http://127.0.0.1:3000/signup
@@ -18,6 +24,7 @@ Content-Type: application/json
 #endpoints
 POST http://127.0.0.1:3000/login 
 Content-Type: application/json
+
 {
     "email": "testing@test.com",
     "password": "password"
@@ -55,5 +62,15 @@ http://127.0.0.1:3000/delete/{{ourBracketID}}
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0JyYWNrZXRzIjp7ImJyYWNrZXQiOltdfSwiX2lkIjoiNjFiMTdmMzQzNjlhY2ZiMGFkNjIwZTNiIiwiZW1haWwiOiJuYXRlZHVuY2FuMEBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMiRuWjl0Q3FmWmZJWkF4TmNWVnVDWUVlSU9JZEpneWtqMlAyTWxxWTh6VlN0VGtpZWRFNFZ5MiIsIl9fdiI6MCwiaWF0IjoxNjM5MDIzMjUwfQ.LBuhMhHJ95NTtCX1ojeU7zn7kHK9Oz6_OjjyqzOcrTE
 
 ###
+<<<<<<< HEAD
+# This is to verify that the change was made in the server
+GET http://127.0.0.1:3000/bracket/61a87596f161526f1bbb80d4
+
+###
+# GET DELETE BRACKET
+GET http://127.0.0.1:3000/delete/61a87bd206117c57480b00f5
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0JyYWNrZXRzIjp7ImJyYWNrZXQiOltdfSwiX2lkIjoiNjFiMTdmMzQzNjlhY2ZiMGFkNjIwZTNiIiwiZW1haWwiOiJuYXRlZHVuY2FuMEBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMiRuWjl0Q3FmWmZJWkF4TmNWVnVDWUVlSU9JZEpneWtqMlAyTWxxWTh6VlN0VGtpZWRFNFZ5MiIsIl9fdiI6MCwiaWF0IjoxNjM5MDIzMjUwfQ.LBuhMhHJ95NTtCX1ojeU7zn7kHK9Oz6_OjjyqzOcrTE
+=======
 # Showing the bracket was deleted
 GET http://127.0.0.1:3000/bracket/{{ourBracketID}}
+>>>>>>> 515a833036ad8b2ae7de8f74ba0c5f7272380299
