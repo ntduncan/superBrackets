@@ -33,6 +33,7 @@ const sendgrid_key = process.env.SENDGRID_KEY;
    })
  );
 
+
 /***
  * logins in the user
  * if the information is correct
@@ -130,9 +131,8 @@ exports.deleteLogout = (req, res, next) => {
   }
 };
 
-
-
 exports.getReset = (req, res, next) => {};
+
 
 /***
  * Sends the user an email with a token so they can reset their password
@@ -142,7 +142,6 @@ exports.postReset = (req, res, next) => {
   crypto.randomBytes(32, (err, buffer) => {
    if(err) {
      console.log(err);
-   //   return res.redirect('/reset');
      return res.json("Error");
    }
    // generate a token from the buffer 
@@ -155,8 +154,6 @@ exports.postReset = (req, res, next) => {
    .then(user => {
      // if the user does not exist, send an error
      if (!user){
-      //  req.flash('error', 'No account with that email found.');
-      //  return res.redirect('reset');
       console.log("No account with that email found.");
       return res.json({ message: "No account with that email found." });
      }
@@ -167,53 +164,29 @@ exports.postReset = (req, res, next) => {
      return user.save(); //save the token info into the user
    })
    .then(result => {
-      // TODO
      // send the token reset email.
-     // !!!!!will need to change the link when doing it on heroku!!!!!!!!
-     // make it send the token so they can copy it or with a heroku link!!!
-    //  res.redirect('/');
-    res.json("Email sent");
      transporter.sendMail({
        to: req.body.email,
        from: 'Super Brackets Support <cheddagang32@gmail.com>', 
        subject: 'Super Brackets Password Reset',
        html: `
        <p>You requested a password reset</p>
-       <p>Click this <a href="http://localhost:3000/reset/${token}"link</a> to set a new password.</p> 
+       <p>Click this <a href="https://superbrackets.herokuapp.com/new-password/${token}">link</a> to set a new password.</p> 
        <P>Your token is: ${token}</P>
        `
-     }); // TODO make the link the heroku link instead of local host?!
+     }); 
+     res.json("Email sent");
    })
    .catch(err => {
      console.log(err);
    });
-
  });
 };
 
-exports.getNewPassword = (req, res, next) => {
-      // // make sure that a token exists for the url
-      // const token = req.params.token;
-      // // see if a token exists for a user and if it is not expired.
-      // // $gt means greater than (so if the time is greater than now (in the future))
-      // User.findOne({resetToken: token, resetTokenExpiration: {$gt: Date.now()}})
-      // .then(user =>{
-      //   let message = req.flash('error');
-      //   if (message.length > 0) {
-      //     message = message[0];
-      //   } else {
-      //     message = null;
-      //   }
-      // })
-      //   .catch(err => {
-      //     console.log(err);
-      //   });
-};
 
 /***
  * Lets the user create a new password, if they have a token
  ***/
-// FIXME
 exports.postNewPassword = (req, res, next) => {
 
   const newPassword = req.body.password;
@@ -241,7 +214,6 @@ exports.postNewPassword = (req, res, next) => {
       return resetUser.save();
     })
     .then(result => {
-      // redirect to login page, once they are finished
       res.json("Password changed, sucessfully!");
     })
     .catch(err => {
