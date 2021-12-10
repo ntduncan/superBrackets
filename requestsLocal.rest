@@ -26,6 +26,9 @@ Content-Type: application/json
 
 
 ###
+# POST Token
+# This call is how the user gets a new access token after
+# one expires. They must provide their refresh token
 POST http://127.0.0.1:3000/token
 Content-Type: application/json
 
@@ -35,28 +38,30 @@ Content-Type: application/json
 
 
 ###
+# GET BRACKETS-LIST
+# This call returns all the brackets
+GET http://127.0.0.1:3000/brackets-list
+
+
+###
 # GET BRACKET
 # This call returns a single bracket
-GET http://127.0.0.1:3000/bracket/61a87596f161526f1bbb80d4
+GET http://127.0.0.1:3000/bracket/:bracketId
 
 
 ###
 # GET ADVANCE_PARTICIPANT
 # This request will advance the first person in the previous bracket
-GET http://127.0.0.1:3000/advance-participant/61a87596f161526f1bbb80d4/61a87596f161526f1bbb80d5
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0JyYWNrZXRzIjp7ImJyYWNrZXQiOltdfSwiX2lkIjoiNjFiMjgwM2VkNWYzNDFkODVhOTFlMDZmIiwiZW1haWwiOiJ0ZXN0aW5nQHRlc3QuY29tIiwicGFzc3dvcmQiOiIkMmIkMTIkdVNvcjRBMHM0RXNpVjI4bjZHTDlidWpiZkJnU3o4OS9CZkE0aFZTaDFVNUpWd3FxbTE3SEciLCJfX3YiOjAsImlhdCI6MTYzOTExNjM4MCwiZXhwIjoxNjM5MTE2NDQwfQ.9IqafPqzNDl9aR8kyPucLNs_LRr6VQUmnL7XRqMxR2o
+GET http://127.0.0.1:3000/advance-participant/:bracketId/:participantId
+Authorization: Bearer <ACCESS_TOKEN>
 
-
-###
-# This is to verify that the change was made in ther server
-GET http://127.0.0.1:3000/bracket/61a87596f161526f1bbb80d4
 
 ###
 # POST EDIT_BRACKET
 # In this edit, we are reseting the advance-participant that took place
-POST http://127.0.0.1:3000/edit-bracket/61a87596f161526f1bbb80d4
+POST http://127.0.0.1:3000/edit-bracket/:bracketId
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzkxMTY1MzYsImV4cCI6MTYzOTExNjU5Nn0.i-50lUBsOCbd2c8hu10VzCOQbsRZ0o2peUY7WdCGiUs
+Authorization: Bearer <ACCESS_TOKEN>
 
 {
 
@@ -88,6 +93,29 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzkxMTY1M
 
 
 ###
+# POST ADD_BRACKET
+# This call will create a new bracket in the database
+# The user must be authenticated to perform this action
+POST http://127.0.0.1:3000/add-bracket
+Content-Type: application/json
+Authorization: Bearer <ACCESS_TOKEN>
+
+{
+    "title": "Just another Test 2",
+    "description": "this is one of many test brackets",
+    "participants": ["Braden", "Brenton", "Nate", "Samuel"]
+}
+
+
+###
+# DELETE DELETE_BRACKET
+# This call will create a new bracket in the database
+# The user must be authenticated to perform this action
+DELETE http://127.0.0.1:3000/delete/:bracketId
+Authorization: Bearer <ACCESS_TOKEN>
+
+
+###
 # DELETE LOGOUT
 # This request will logout the user by destroying their refresh token.
 # They will have to login to get another.
@@ -95,5 +123,5 @@ DELETE http://127.0.0.1:3000/logout
 Content-Type: application/json
 
 {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0JyYWNrZXRzIjp7ImJyYWNrZXQiOltdfSwiX2lkIjoiNjFiMjgwM2VkNWYzNDFkODVhOTFlMDZmIiwiZW1haWwiOiJ0ZXN0aW5nQHRlc3QuY29tIiwicGFzc3dvcmQiOiIkMmIkMTIkdVNvcjRBMHM0RXNpVjI4bjZHTDlidWpiZkJnU3o4OS9CZkE0aFZTaDFVNUpWd3FxbTE3SEciLCJfX3YiOjAsImlhdCI6MTYzOTExNjQ2OH0.4sB_TyUIl6-1zojdHvJe2-1tRykqd1Vtb0EhUPMkHpY"
+    "token": "<REFRESH_TOKEN>"
 }

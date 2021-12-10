@@ -108,12 +108,9 @@ exports.advanceParticipant = (req, res, next) => {
 };
 
 exports.postAddBracket = (req, res, next) => {
-   const title = req.params.title;
-   const description = req.params.description;
-   const participants = req.params.participants.split("@"); // should be sent as a list of names separated by commas
-
-   //  if (participants.length != 2 || 4 || 8 || 16 || 32 || 64) {
-   //  }
+   const title = req.body.title;
+   const description = req.body.description;
+   const participants = req.body.participants;
 
    let participantsWithRounds = [];
    participants.forEach((person) => {
@@ -133,7 +130,8 @@ exports.postAddBracket = (req, res, next) => {
    bracket
       .save()
       .then((result) => {
-         res.json({ message: "Bracket was saved" });
+         console.log(result)
+         res.json({ message: "Bracket was saved", id: result.id });
       })
       .catch((err) => {
          console.log(err); //may want to update this later
