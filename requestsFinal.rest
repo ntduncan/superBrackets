@@ -29,7 +29,9 @@ Content-Type: application/json
 # POST Token
 # This call is how the user gets a new access token after
 # one expires. They must provide their refresh token
-#  Access tokens are only valid for 1min for demonstrative purposes
+# Access tokens are only valid for 1min for demonstrative purposes. Typically
+# the access token would expire within seconds of of the creation which requires
+# the user to frequently refresh their access token.
 POST http://superBrackets.herokuapp.com/token
 Content-Type: application/json
 
