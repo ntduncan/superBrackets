@@ -130,5 +130,9 @@ DELETE http://superBrackets.herokuapp.com/logout
 Content-Type: application/json
 
 {
+<<<<<<< HEAD
     "token": {{REFRESH_TOKEN}}
+=======
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0JyYWNrZXRzIjp7ImJyYWNrZXQiOltdfSwiX2lkIjoiNjFiMjgwM2VkNWYzNDFkODVhOTFlMDZmIiwiZW1haWwiOiJ0ZXN0aW5nQHRlc3QuY29tIiwicGFzc3dvcmQiOiIkMmIkMTIkdVNvcjRBMHM0RXNpVjI4bjZHTDlidWpiZkJnU3o4OS9CZkE0aFZTaDFVNUpWd3FxbTE3SEciLCJfX3YiOjAsImlhdCI6MTYzOTE4MzgzN30.SH3u_RbVB6yk2tVGErCRFB0mEbyRxmnb_sO5RsBP9iU"
+>>>>>>> 26dbfdf62b34a98055c74262972da38921c8a49d
 }

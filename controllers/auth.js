@@ -58,11 +58,12 @@ exports.postLogin = (req, res, next) => {
         .then((doMatch) => {
           // do this if the passwords match
           if (doMatch) {
-            console.log();
+
             //Create JWT if they have valid credentials
             const accessToken = generateAccessToken(user);
             const refreshToken = jwt.sign(JSON.parse(JSON.stringify(user)), process.env.REFRESH_TOKEN)
             refreshTokens.push(refreshToken);
+
             req.user = user; 
 
             //Send Access Token back to user
@@ -128,10 +129,12 @@ exports.postSignup = (req, res, next) => {
  ***/
 exports.deleteLogout = (req, res, next) => {
   // Filter the token out of refreshTokens array
+  
   const refreshToken = req.body.token;
   refreshTokens = refreshTokens.filter(token => {
     token != refreshToken
   })
+
 
   // Double Check to make sure it is gone
   if(!refreshTokens.includes(refreshToken)){
@@ -232,7 +235,6 @@ exports.postNewPassword = (req, res, next) => {
 
 exports.postToken = (req, res) => {
   const refreshToken = req.body.token; //Get the provided refresh token
-  refreshTokens.push(refreshToken); 
   
   if (refreshToken == null) return res.sendStatus(401); //If the refresh token is null they don't have a token (Unauthorized)
   if (!refreshTokens.includes(refreshToken)) return res.sendStatus(403); //If they refresh token is not stored on the server it is expired (Forbidden)
