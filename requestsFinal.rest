@@ -1,6 +1,9 @@
 ###
 # POST SIGN_UP
 # This call will create a new user account
+# Instructions: Enter an email and password to test that it signs them up
+# also try typing in a password that is less than 5 characters, passwords that don't match,
+# or an invalid email address (ie: test.com intsead of test@test.com). 
 POST http://superBrackets.herokuapp.com/signup
 Content-Type: application/json
 
@@ -16,6 +19,8 @@ Content-Type: application/json
 # This is the endpoint to login. It will return an
 # access token that can be used to access protected 
 #endpoints
+# Instructions: Login with the newly created username and password, then copy and paste the values for the tokens 
+# into the variables below.
 @REFRESH_TOKEN = "eJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0JyYWNrZXRzIjp7ImJyYWNrZXQiOltdfSwiX2lkIjoiNjFiMjgwM2VkNWYzNDFkODVhOTFlMDZmIiwiZW1haWwiOiJ0ZXN0aW5nQHRlc3QuY29tIiwicGFzc3dvcmQiOiIkMmIkMTIkdVNvcjRBMHM0RXNpVjI4bjZHTDlidWpiZkJnU3o4OS9CZkE0aFZTaDFVNUpWd3FxbTE3SEciLCJfX3YiOjAsImlhdCI6MTYzOTE4MjU4Mn0.djkxn40fJ-Ju_s8abzqMGj97QqACurcJMhtN_3eU40Y"
 @ACCESS_TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzkxODI1OTksImV4cCI6MTYzOTE4Mjg5OX0.tTVmRkgKsesTahUBSROaxDOvs8OyIlWj2UiWKLkb80M
 
@@ -34,6 +39,8 @@ Content-Type: application/json
 # Access tokens are only valid for 1min for demonstrative purposes. Typically
 # the access token would expire within seconds of of the creation which requires
 # the user to frequently refresh their access token.
+# Instructions: Test that a new access token is sent. Note that the user needs to logged in and needs to have a
+# valid reset token. When the user is logged out, this should give a "Forbidden" error.
 POST http://superBrackets.herokuapp.com/token
 Content-Type: application/json
 
@@ -44,12 +51,15 @@ Content-Type: application/json
 ###
 # GET BRACKETS-LIST
 # This call returns all the brackets
+# Instructions: Test that this returns all the brackets.
 GET http://superBrackets.herokuapp.com/brackets-list
 
 
 ###
 # GET BRACKET
 # This call returns a single bracket
+# Instructions: Test that this returns the bracket based on the bracketId variable below. 
+# try inputing different Ids to see the results.
 @bracketId = 61b3f18dfb5a6b3d73ce077b
 @participantId = 61a87596f161526f1bbb80d5
 
@@ -59,6 +69,8 @@ GET http://superBrackets.herokuapp.com/bracket/{{bracketId}}
 ###
 # GET ADVANCE_PARTICIPANT
 # This request will advance the first person in the previous bracket
+# Instructions: Test that this advances the participant (based on the participantId variable above)  
+# in the bracket, specified by the bracketId variable above.
 GET http://superBrackets.herokuapp.com/advance-participant/{{bracketId}}/{{participantId}}
 Authorization: Bearer {{ACCESS_TOKEN}}
 
@@ -66,6 +78,8 @@ Authorization: Bearer {{ACCESS_TOKEN}}
 ###
 # POST EDIT_BRACKET
 # In this edit, we are reseting the advance-participant that took place
+# Instructions: This function should edit the bracket in the id 
+# to be like the bracket below. 
 POST http://superBrackets.herokuapp.com/edit-bracket/{{bracketId}}
 Content-Type: application/json
 Authorization: Bearer {{ACCESS_TOKEN}}
@@ -103,6 +117,8 @@ Authorization: Bearer {{ACCESS_TOKEN}}
 # POST ADD_BRACKET
 # This call will create a new bracket in the database
 # The user must be authenticated to perform this action
+# Instructions: Test that this request adds the below bracket to the all
+# brackets list.
 POST http://superBrackets.herokuapp.com/add-bracket
 Content-Type: application/json
 Authorization: Bearer {{ACCESS_TOKEN}}
@@ -118,6 +134,9 @@ Authorization: Bearer {{ACCESS_TOKEN}}
 # DELETE DELETE_BRACKET
 # This call will create a new bracket in the database
 # The user must be authenticated to perform this action
+# Instructions: Change the bracketId variable to be the
+# bracket that was created in the above request. Then 
+# check that it has been deleted with the get brackets-list
 DELETE http://superBrackets.herokuapp.com/delete/{{bracketId}}
 Authorization: Bearer {{ACCESS_TOKEN}}
 
@@ -126,13 +145,11 @@ Authorization: Bearer {{ACCESS_TOKEN}}
 # DELETE LOGOUT
 # This request will logout the user by destroying their refresh token.
 # They will have to login to get another.
+# Instructions: Test that this logs the user out. After sending this request,
+# try sending the post token request. It should give a "forbidden" error.
 DELETE http://superBrackets.herokuapp.com/logout
 Content-Type: application/json
 
 {
-<<<<<<< HEAD
-    "token": {{REFRESH_TOKEN}}
-=======
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0JyYWNrZXRzIjp7ImJyYWNrZXQiOltdfSwiX2lkIjoiNjFiMjgwM2VkNWYzNDFkODVhOTFlMDZmIiwiZW1haWwiOiJ0ZXN0aW5nQHRlc3QuY29tIiwicGFzc3dvcmQiOiIkMmIkMTIkdVNvcjRBMHM0RXNpVjI4bjZHTDlidWpiZkJnU3o4OS9CZkE0aFZTaDFVNUpWd3FxbTE3SEciLCJfX3YiOjAsImlhdCI6MTYzOTE4MzgzN30.SH3u_RbVB6yk2tVGErCRFB0mEbyRxmnb_sO5RsBP9iU"
->>>>>>> 26dbfdf62b34a98055c74262972da38921c8a49d
 }
