@@ -5,7 +5,7 @@ POST http://superBrackets.herokuapp.com/signup
 Content-Type: application/json
 
 {
-    "email": "testing@test.com",
+    "email": "testing1@test.com",
     "password": "password",
     "confirmPassword": "password"
 }
@@ -16,6 +16,9 @@ Content-Type: application/json
 # This is the endpoint to login. It will return an
 # access token that can be used to access protected 
 #endpoints
+@REFRESH_TOKEN = "eJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0JyYWNrZXRzIjp7ImJyYWNrZXQiOltdfSwiX2lkIjoiNjFiMjgwM2VkNWYzNDFkODVhOTFlMDZmIiwiZW1haWwiOiJ0ZXN0aW5nQHRlc3QuY29tIiwicGFzc3dvcmQiOiIkMmIkMTIkdVNvcjRBMHM0RXNpVjI4bjZHTDlidWpiZkJnU3o4OS9CZkE0aFZTaDFVNUpWd3FxbTE3SEciLCJfX3YiOjAsImlhdCI6MTYzOTE4MjU4Mn0.djkxn40fJ-Ju_s8abzqMGj97QqACurcJMhtN_3eU40Y"
+@ACCESS_TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzkxODI1OTksImV4cCI6MTYzOTE4Mjg5OX0.tTVmRkgKsesTahUBSROaxDOvs8OyIlWj2UiWKLkb80M
+
 POST http://superBrackets.herokuapp.com/login 
 Content-Type: application/json
 
@@ -23,7 +26,6 @@ Content-Type: application/json
     "email": "testing@test.com",
     "password": "password"
 }
-
 
 ###
 # POST Token
@@ -36,9 +38,8 @@ POST http://superBrackets.herokuapp.com/token
 Content-Type: application/json
 
 {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0JyYWNrZXRzIjp7ImJyYWNrZXQiOltdfSwiX2lkIjoiNjFiMjgwM2VkNWYzNDFkODVhOTFlMDZmIiwiZW1haWwiOiJ0ZXN0aW5nQHRlc3QuY29tIiwicGFzc3dvcmQiOiIkMmIkMTIkdVNvcjRBMHM0RXNpVjI4bjZHTDlidWpiZkJnU3o4OS9CZkE0aFZTaDFVNUpWd3FxbTE3SEciLCJfX3YiOjAsImlhdCI6MTYzOTExODAzNn0.DJsm3mKUGTFaU9pOpPAmbN1gsN5hJUR0JwcT024jzcM"
+    "token": {{REFRESH_TOKEN}}
 }
-
 
 ###
 # GET BRACKETS-LIST
@@ -49,22 +50,25 @@ GET http://superBrackets.herokuapp.com/brackets-list
 ###
 # GET BRACKET
 # This call returns a single bracket
-GET http://superBrackets.herokuapp.com/bracket/:bracketId
+@bracketId = 61b3f18dfb5a6b3d73ce077b
+@participantId = 61a87596f161526f1bbb80d5
+
+GET http://superBrackets.herokuapp.com/bracket/{{bracketId}}
 
 
 ###
 # GET ADVANCE_PARTICIPANT
 # This request will advance the first person in the previous bracket
-GET http://superBrackets.herokuapp.com/advance-participant/:bracketId/:participantId
-Authorization: Bearer <ACCESS_TOKEN>
+GET http://superBrackets.herokuapp.com/advance-participant/{{bracketId}}/{{participantId}}
+Authorization: Bearer {{ACCESS_TOKEN}}
 
 
 ###
 # POST EDIT_BRACKET
 # In this edit, we are reseting the advance-participant that took place
-POST http://superBrackets.herokuapp.com/edit-bracket/:bracketId
+POST http://superBrackets.herokuapp.com/edit-bracket/{{bracketId}}
 Content-Type: application/json
-Authorization: Bearer <ACCESS_TOKEN>
+Authorization: Bearer {{ACCESS_TOKEN}}
 
 {
 
@@ -101,7 +105,7 @@ Authorization: Bearer <ACCESS_TOKEN>
 # The user must be authenticated to perform this action
 POST http://superBrackets.herokuapp.com/add-bracket
 Content-Type: application/json
-Authorization: Bearer <ACCESS_TOKEN>
+Authorization: Bearer {{ACCESS_TOKEN}}
 
 {
     "title": "Just another Test 2",
@@ -114,8 +118,8 @@ Authorization: Bearer <ACCESS_TOKEN>
 # DELETE DELETE_BRACKET
 # This call will create a new bracket in the database
 # The user must be authenticated to perform this action
-DELETE http://superBrackets.herokuapp.com/delete/:bracketId
-Authorization: Bearer <ACCESS_TOKEN>
+DELETE http://superBrackets.herokuapp.com/delete/{{bracketId}}
+Authorization: Bearer {{ACCESS_TOKEN}}
 
 
 ###
@@ -126,5 +130,5 @@ DELETE http://superBrackets.herokuapp.com/logout
 Content-Type: application/json
 
 {
-    "token": "<REFRESH_TOKEN>"
+    "token": {{REFRESH_TOKEN}}
 }
